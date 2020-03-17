@@ -46,7 +46,7 @@ TARGET		:=	chocolateDoom
 BUILD		:=	build
 SOURCES		:=	src/ src/doom/ opl/ textscreen/ pcsound/
 #DATA		:=	data
-INCLUDES	:=	codeblocks/ textscreen/ pcsound/
+INCLUDES    :=  src/ src/doom/ opl/ textscreen/ pcsound/ codeblocks/ 
 #ROMFS	:=	romfs
 
 #---------------------------------------------------------------------------------
