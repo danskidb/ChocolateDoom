@@ -14,6 +14,11 @@
 		"C_Cpp.default.includePath": [
 			"C:\\devkitPro\\portLibs\\switch\\include\\SDL2\\",
 			"${workspaceFolder}/codeblocks/"
-		]
+		],
+		"files.associations": {
+			"sdl.h": "c",
+			"stdio.h": "c",
+			"corecrt.h": "c"
+		}
 	}
 }
