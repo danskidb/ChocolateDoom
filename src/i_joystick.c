@@ -143,30 +143,31 @@ void I_InitJoystick(void)
 {
     int index;
 
-    if (!usejoystick || !strcmp(joystick_guid, ""))
-    {
-        return;
-    }
+    // if (!usejoystick || !strcmp(joystick_guid, ""))
+    // {
+    //     return;
+    // }
 
     if (SDL_Init(SDL_INIT_JOYSTICK) < 0)
     {
         return;
     }
 
-    index = DeviceIndex();
+    // index = DeviceIndex();
 
-    if (index < 0)
-    {
-        printf("I_InitJoystick: Couldn't find joystick with GUID \"%s\": "
-               "device not found or not connected?\n",
-               joystick_guid);
-        SDL_QuitSubSystem(SDL_INIT_JOYSTICK);
-        return;
-    }
+    // if (index < 0)
+    // {
+    //     printf("I_InitJoystick: Couldn't find joystick with GUID \"%s\": "
+    //            "device not found or not connected?\n",
+    //            joystick_guid);
+    //     SDL_QuitSubSystem(SDL_INIT_JOYSTICK);
+    //     return;
+    // }
 
     // Open the joystick
 
-    joystick = SDL_JoystickOpen(index);
+    //joystick = SDL_JoystickOpen(index);
+    joystick = SDL_JoystickOpen(0);
 
     if (joystick == NULL)
     {
