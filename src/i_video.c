@@ -94,7 +94,7 @@ static boolean initialized = false;
 
 // disable mouse?
 
-static boolean nomouse = false;
+static boolean nomouse = true;
 int usemouse = 1;
 
 // Save screenshots in PNG format.
@@ -121,7 +121,7 @@ int aspect_ratio_correct = true;
 // Force software rendering, for systems which lack effective hardware
 // acceleration
 
-int force_software_renderer = false;
+int force_software_renderer = true;
 
 // Time to wait for the screen to settle on startup before starting the
 // game (ms)
@@ -150,7 +150,7 @@ boolean screenvisible = true;
 // If true, we display dots at the bottom of the screen to 
 // indicate FPS.
 
-static boolean display_fps_dots;
+static boolean display_fps_dots = true;
 
 // If this is true, the screen is rendered but not blitted to the
 // video buffer.
@@ -859,13 +859,6 @@ void I_GraphicsCheckCommandLine(void)
         fullscreen = true;
     }
 
-    //!
-    // @category video 
-    //
-    // Disable the mouse.
-    //
-
-    nomouse = M_CheckParm("-nomouse") > 0;
 
     //!
     // @category video

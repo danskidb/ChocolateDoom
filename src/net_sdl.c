@@ -154,6 +154,8 @@ static void NET_SDL_FreeAddress(net_addr_t *addr)
 
 static boolean NET_SDL_InitClient(void)
 {
+    return false;
+
     int p;
 
     if (initted)
@@ -171,7 +173,7 @@ static boolean NET_SDL_InitClient(void)
     if (p > 0)
         port = atoi(myargv[p+1]);
 
-    SDLNet_Init();
+    //SDLNet_Init();
 
     udpsocket = SDLNet_UDP_Open(0);
 
@@ -193,6 +195,8 @@ static boolean NET_SDL_InitClient(void)
 
 static boolean NET_SDL_InitServer(void)
 {
+    return false; 
+
     int p;
 
     if (initted)
@@ -202,7 +206,7 @@ static boolean NET_SDL_InitServer(void)
     if (p > 0)
         port = atoi(myargv[p+1]);
 
-    SDLNet_Init();
+    //SDLNet_Init();
 
     udpsocket = SDLNet_UDP_Open(port);
 
@@ -228,7 +232,7 @@ static void NET_SDL_SendPacket(net_addr_t *addr, net_packet_t *packet)
    
     if (addr == &net_broadcast_addr)
     {
-        SDLNet_ResolveHost(&ip, NULL, port);
+        //SDLNet_ResolveHost(&ip, NULL, port);
         ip.host = INADDR_BROADCAST;
     }
     else
@@ -262,18 +266,18 @@ static void NET_SDL_SendPacket(net_addr_t *addr, net_packet_t *packet)
     sdl_packet.len = packet->len;
     sdl_packet.address = ip;
 
-    if (!SDLNet_UDP_Send(udpsocket, -1, &sdl_packet))
-    {
-        I_Error("NET_SDL_SendPacket: Error transmitting packet: %s",
-                SDLNet_GetError());
-    }
+    // if (!SDLNet_UDP_Send(udpsocket, -1, &sdl_packet))
+    // {
+    //     I_Error("NET_SDL_SendPacket: Error transmitting packet: %s",
+    //             SDLNet_GetError());
+    // }
 }
 
 static boolean NET_SDL_RecvPacket(net_addr_t **addr, net_packet_t **packet)
 {
     int result;
 
-    result = SDLNet_UDP_Recv(udpsocket, recvpacket);
+//    result = SDLNet_UDP_Recv(udpsocket, recvpacket);
 
     if (result < 0)
     {
@@ -347,7 +351,7 @@ net_addr_t *NET_SDL_ResolveAddress(char *address)
 	addr_port = port;
     }
     
-    result = SDLNet_ResolveHost(&ip, addr_hostname, addr_port);
+    //result = SDLNet_ResolveHost(&ip, addr_hostname, addr_port);
 
     if (addr_hostname != address)
     {
