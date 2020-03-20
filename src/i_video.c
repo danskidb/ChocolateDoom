@@ -116,17 +116,17 @@ int fullscreen = true;
 
 // Aspect ratio correction mode
 
-int aspect_ratio_correct = true;
+int aspect_ratio_correct = false;
 
 // Force software rendering, for systems which lack effective hardware
 // acceleration
 
-int force_software_renderer = true;
+int force_software_renderer = false;
 
 // Time to wait for the screen to settle on startup before starting the
 // game (ms)
 
-static int startup_delay = 1000;
+static int startup_delay = 0;
 
 // Grab the mouse? (int type for config code). nograbmouse_override allows
 // this to be temporarily disabled via the command line.
