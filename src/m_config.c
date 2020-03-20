@@ -38,6 +38,8 @@
 
 #include "z_zone.h"
 
+#include "deh_str.h"
+
 //
 // DEFAULTS
 //
@@ -1945,7 +1947,7 @@ void M_LoadDefaults (void)
             = M_StringJoin(configdir, default_main_config, NULL);
     }
 
-    printf("saving config in %s\n", doom_defaults.filename);
+    DEH_printf("saving config in %s\n", doom_defaults.filename);
 
     //!
     // @arg <file>
@@ -1959,7 +1961,7 @@ void M_LoadDefaults (void)
     if (i)
     {
         extra_defaults.filename = myargv[i+1];
-        printf("        extra configuration file: %s\n", 
+        DEH_printf("        extra configuration file: %s\n", 
                extra_defaults.filename);
     }
     else
@@ -2132,7 +2134,7 @@ void M_SetConfigDir(char *dir)
 
     if (strcmp(configdir, "") != 0)
     {
-        printf("Using %s for configuration and saves\n", configdir);
+        DEH_printf("Using %s for configuration and saves\n", configdir);
     }
 
     // Make the directory if it doesn't already exist:

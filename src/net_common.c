@@ -26,6 +26,8 @@
 #include "net_packet.h"
 #include "net_structrw.h"
 
+#include "deh_str.h"
+
 // connections time out after 30 seconds
 
 #define CONNECTION_TIMEOUT_LEN 30
@@ -165,7 +167,7 @@ static void NET_Conn_ParseReject(net_connection_t *conn, net_packet_t *packet)
         conn->state = NET_CONN_STATE_DISCONNECTED;
         conn->disconnect_reason = NET_DISCONNECT_REMOTE;
 
-        printf("Rejected by server: ");
+        DEH_printf("Rejected by server: ");
         NET_SafePuts(msg);
     }
 }

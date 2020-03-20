@@ -130,7 +130,7 @@ static void LoadGameSettings(net_gamesettings_t *settings)
 
     if (lowres_turn)
     {
-        printf("NOTE: Turning resolution is reduced; this is probably "
+        DEH_printf("NOTE: Turning resolution is reduced; this is probably "
                "because there is a client recording a Vanilla demo.\n");
     }
 
@@ -285,8 +285,8 @@ void D_CheckNetGame(void)
         {
             DEH_printf("Levels will end after %d minute", timelimit);
             if (timelimit > 1)
-                printf("s");
-            printf(".\n");
+                DEH_printf("s");
+            DEH_printf(".\n");
         }
     }
 }

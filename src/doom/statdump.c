@@ -29,6 +29,8 @@
 
 #include "statdump.h"
 
+#include "deh_str.h"
+
 /* Par times for E1M1-E1M9. */
 static const int doom1_par_times[] =
 {
@@ -324,7 +326,7 @@ void StatDump(void)
 
     if (i > 0)
     {
-        printf("Statistics captured for %i level(s)\n", num_captured_stats);
+        DEH_printf("Statistics captured for %i level(s)\n", num_captured_stats);
 
         // We actually know what the real gamemission is, but this has
         // to match the output from statdump.exe.

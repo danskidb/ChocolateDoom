@@ -705,7 +705,7 @@ int main(int argc, char *argv[])
 
     if (argc != 3)
     {
-        printf("Usage: %s <musfile> <midfile>\n", argv[0]);
+        DEH_printf("Usage: %s <musfile> <midfile>\n", argv[0]);
         exit(-1);
     }
 

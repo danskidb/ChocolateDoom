@@ -696,7 +696,7 @@ static void LoadSubstituteConfigs(void)
 
     if (subst_music_len > 0)
     {
-        printf("Loaded %i music substitutions from config files.\n",
+        DEH_printf("Loaded %i music substitutions from config files.\n",
                subst_music_len);
     }
 }
@@ -779,7 +779,7 @@ static void DumpSubstituteConfig(char *filename)
     fprintf(fs, "\n");
     fclose(fs);
 
-    printf("Substitute MIDI config file written to %s.\n", filename);
+    DEH_printf("Substitute MIDI config file written to %s.\n", filename);
     I_Quit();
 }
 

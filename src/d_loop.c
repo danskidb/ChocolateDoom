@@ -40,6 +40,8 @@
 #include "net_sdl.h"
 #include "net_loop.h"
 
+#include "deh_str.h"
+
 // The complete set of data for a particular tic.
 
 typedef struct
@@ -266,7 +268,7 @@ static void D_Disconnected(void)
 
     // disconnected from server
 
-    printf("Disconnected from server.\n");
+    DEH_printf("Disconnected from server.\n");
 }
 
 //
@@ -436,7 +438,7 @@ void D_StartNetGame(net_gamesettings_t *settings,
     // TODO: Message disabled until we fix new_sync.
     //if (!new_sync)
     //{
-    //    printf("Syncing netgames like Vanilla Doom.\n");
+    //    DEH_printf("Syncing netgames like Vanilla Doom.\n");
     //}
 }
 
@@ -527,7 +529,7 @@ boolean D_InitNetGame(net_connect_data_t *connect_data)
                     NET_AddrToString(addr));
         }
 
-        printf("D_InitNetGame: Connected to %s\n", NET_AddrToString(addr));
+        DEH_printf("D_InitNetGame: Connected to %s\n", NET_AddrToString(addr));
 
         // Wait for launch message received from server.
 

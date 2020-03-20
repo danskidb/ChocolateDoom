@@ -539,9 +539,9 @@ static const known_joystick_t *GetJoystickType(int index)
         }
     }
 
-    printf("Unknown joystick '%s' with %i axes, %i buttons, %i hats\n",
+    DEH_printf("Unknown joystick '%s' with %i axes, %i buttons, %i hats\n",
            name, axes, buttons, hats);
-    printf("Please consider sending in details about your gamepad!\n");
+    DEH_printf("Please consider sending in details about your gamepad!\n");
 
     return NULL;
 }

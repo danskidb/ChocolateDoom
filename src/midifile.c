@@ -762,10 +762,10 @@ void PrintTrack(midi_track_t *track)
 
         if (event->delta_time > 0)
         {
-            printf("Delay: %i ticks\n", event->delta_time);
+            DEH_printf("Delay: %i ticks\n", event->delta_time);
         }
 
-        printf("Event type: %s (%i)\n",
+        DEH_printf("Event type: %s (%i)\n",
                MIDI_EventTypeToString(event->event_type),
                event->event_type);
 
@@ -778,19 +778,19 @@ void PrintTrack(midi_track_t *track)
             case MIDI_EVENT_PROGRAM_CHANGE:
             case MIDI_EVENT_CHAN_AFTERTOUCH:
             case MIDI_EVENT_PITCH_BEND:
-                printf("\tChannel: %i\n", event->data.channel.channel);
-                printf("\tParameter 1: %i\n", event->data.channel.param1);
-                printf("\tParameter 2: %i\n", event->data.channel.param2);
+                DEH_printf("\tChannel: %i\n", event->data.channel.channel);
+                DEH_printf("\tParameter 1: %i\n", event->data.channel.param1);
+                DEH_printf("\tParameter 2: %i\n", event->data.channel.param2);
                 break;
 
             case MIDI_EVENT_SYSEX:
             case MIDI_EVENT_SYSEX_SPLIT:
-                printf("\tLength: %i\n", event->data.sysex.length);
+                DEH_printf("\tLength: %i\n", event->data.sysex.length);
                 break;
 
             case MIDI_EVENT_META:
-                printf("\tMeta type: %i\n", event->data.meta.type);
-                printf("\tLength: %i\n", event->data.meta.length);
+                DEH_printf("\tMeta type: %i\n", event->data.meta.type);
+                DEH_printf("\tLength: %i\n", event->data.meta.length);
                 break;
         }
     }
@@ -803,7 +803,7 @@ int main(int argc, char *argv[])
 
     if (argc < 2)
     {
-        printf("Usage: %s <filename>\n", argv[0]);
+        DEH_printf("Usage: %s <filename>\n", argv[0]);
         exit(1);
     }
 
@@ -817,7 +817,7 @@ int main(int argc, char *argv[])
 
     for (i=0; i<file->num_tracks; ++i)
     {
-        printf("\n== Track %i ==\n\n", i);
+        DEH_printf("\n== Track %i ==\n\n", i);
 
         PrintTrack(&file->tracks[i]);
     }

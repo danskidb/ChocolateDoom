@@ -540,12 +540,12 @@ void R_InitTextures (void)
 
     if (I_ConsoleStdout())
     {
-        printf("[");
+        DEH_printf("[");
         for (i = 0; i < temp3 + 9; i++)
-            printf(" ");
-        printf("]");
+            DEH_printf(" ");
+        DEH_printf("]");
         for (i = 0; i < temp3 + 10; i++)
-            printf("\b");
+            DEH_printf("\b");
     }
 	
     for (i=0 ; i<numtextures ; i++, directory++)

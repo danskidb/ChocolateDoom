@@ -1164,7 +1164,7 @@ static void CheckGLVersion(void)
 
         if (version && strstr(version, "Mesa"))
         {
-            printf("%s", hw_emu_warning);
+            DEH_printf("%s", hw_emu_warning);
         }
     }
 }

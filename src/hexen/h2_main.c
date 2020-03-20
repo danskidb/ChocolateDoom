@@ -219,7 +219,7 @@ static void AdjustForMacIWAD(void)
 
     if (adjust_music)
     {
-        printf("** Note: You appear to be using the Mac version of the Hexen\n"
+        DEH_printf("** Note: You appear to be using the Mac version of the Hexen\n"
                "** IWAD file. This is missing the lumps required for OPL or\n"
                "** GUS emulation. Your music configuration is being adjusted\n"
                "** to a different setting that won't cause the game to "
@@ -250,12 +250,12 @@ static boolean D_GrabMouseCallback(void)
 
 static void D_HexenQuitMessage(void)
 {
-    printf("\nHexen: Beyond Heretic\n");
+    DEH_printf("\nHexen: Beyond Heretic\n");
 }
 
 static void D_AddFile(char *filename)
 {
-    printf("  adding %s\n", filename);
+    DEH_printf("  adding %s\n", filename);
 
     W_AddFile(filename);
 }
@@ -1051,7 +1051,7 @@ void CleanExit(void)
 	I_ShutdownKeyboard();
 	regs.x.eax = 0x3;
 	int386(0x10, &regs, &regs);
-	printf("Exited from HEXEN: Beyond Heretic.\n");
+	DEH_printf("Exited from HEXEN: Beyond Heretic.\n");
 	exit(1);
 }
 */

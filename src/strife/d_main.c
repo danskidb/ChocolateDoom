@@ -871,7 +871,7 @@ void D_IdentifyVersion(void)
             disable_voices = 1;
 
             if(devparm)
-                 printf("Voices disabled\n");
+                 DEH_printf("Voices disabled\n");
         }
         else
         {
@@ -928,7 +928,7 @@ static boolean D_AddFile(char *filename)
 {
     wad_file_t *handle;
 
-    printf(" adding %s\n", filename);
+    DEH_printf(" adding %s\n", filename);
     handle = W_AddFile(filename);
 
     return handle != NULL;
@@ -969,14 +969,14 @@ void PrintDehackedBanners(void)
 
         if (deh_s != copyright_banners[i])
         {
-            printf("%s", deh_s);
+            DEH_printf("%s", deh_s);
 
             // Make sure the modified banner always ends in a newline character.
             // If it doesn't, add a newline.  This fixes av.wad.
 
             if (deh_s[strlen(deh_s) - 1] != '\n')
             {
-                printf("\n");
+                DEH_printf("\n");
             }
         }
     }
@@ -1028,11 +1028,11 @@ static void InitGameVersion(void)
 
         if (gameversions[i].description == NULL) 
         {
-            printf("Supported game versions:\n");
+            DEH_printf("Supported game versions:\n");
 
             for (i=0; gameversions[i].description != NULL; ++i)
             {
-                printf("\t%s (%s)\n", gameversions[i].cmdline,
+                DEH_printf("\t%s (%s)\n", gameversions[i].cmdline,
                         gameversions[i].description);
             }
 
@@ -1053,7 +1053,7 @@ void PrintGameVersion(void)
     {
         if (gameversions[i].version == gameversion)
         {
-            printf("Emulating the behavior of the "
+            DEH_printf("Emulating the behavior of the "
                    "'%s' executable.\n", gameversions[i].description);
             break;
         }
@@ -1355,7 +1355,7 @@ void D_DoomMain (void)
 
     if (M_CheckParm("-dedicated") > 0)
     {
-        printf("Dedicated server mode.\n");
+        DEH_printf("Dedicated server mode.\n");
         NET_DedicatedServer();
 
         // Never returns
@@ -1490,7 +1490,7 @@ void D_DoomMain (void)
 
     if (M_CheckParm("-cdrom") > 0)
     {
-        printf(D_CDROM);
+        DEH_printf(D_CDROM);
 
         // haleyjd 08/22/2010: [STRIFE] Use strife.cd folder for -cdrom
         M_SetConfigDir("c:\\strife.cd\\");
@@ -1582,7 +1582,7 @@ void D_DoomMain (void)
         int serialnum = atoi(serial);
 
         DEH_snprintf(msgbuf, sizeof(msgbuf), "Wad Serial Number: %d:", serialnum);
-        printf("%s\n", msgbuf);
+        DEH_printf("%s\n", msgbuf);
     }
 
     // add any files specified on the command line with -file wadfile
@@ -1648,7 +1648,7 @@ void D_DoomMain (void)
             M_StringCopy(demolumpname, myargv[p + 1], sizeof(demolumpname));
         }
 
-        printf("Playing demo %s.\n", file);
+        DEH_printf("Playing demo %s.\n", file);
     }
 
     I_AtExit(G_CheckDemoStatusAtExit, true);
@@ -1772,7 +1772,7 @@ void D_DoomMain (void)
     if (p)
     {
         timelimit = atoi(myargv[p+1]);
-        printf("timer: %i\n", timelimit);
+        DEH_printf("timer: %i\n", timelimit);
     }
 
     //!
@@ -1852,7 +1852,7 @@ void D_DoomMain (void)
      || W_CheckNumForName("FF_END") >= 0)
     {
         I_PrintDivider();
-        printf(" WARNING: The loaded WAD file contains modified sprites or\n"
+        DEH_printf(" WARNING: The loaded WAD file contains modified sprites or\n"
                " floor textures.  You may want to use the '-merge' command\n"
                " line option instead of '-file'.\n");
     }

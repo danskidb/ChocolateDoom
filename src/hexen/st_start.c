@@ -215,7 +215,7 @@ void ST_Progress(void)
         }
     }
 
-    printf(".");
+    DEH_printf(".");
 }
 
 
@@ -227,7 +227,7 @@ void ST_Progress(void)
 
 void ST_NetProgress(void)
 {
-    printf("*");
+    DEH_printf("*");
 
     if (using_graphical_startup)
     {

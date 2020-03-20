@@ -519,7 +519,7 @@ static void NET_SV_AdvanceWindow(void)
         memset(&recvwindow[BACKUPTICS-1], 0, sizeof(*recvwindow));
         ++recvwindow_start;
 
-        //printf("SV: advanced to %i\n", recvwindow_start);
+        //DEH_printf("SV: advanced to %i\n", recvwindow_start);
     }
 }
 
@@ -973,7 +973,7 @@ static void NET_SV_SendResendRequest(net_client_t *client, int start, int end)
     unsigned int nowtime;
     int index;
 
-    //printf("SV: send resend for %i-%i\n", start, end);
+    //DEH_printf("SV: send resend for %i-%i\n", start, end);
 
     packet = NET_NewPacket(20);
 
@@ -1051,7 +1051,7 @@ static void NET_SV_CheckResends(net_client_t *client)
             {
                 // End of a run of resend tics
 
-                //printf("SV: resend request timed out: %i-%i\n", resend_start, resend_end);
+                //DEH_printf("SV: resend request timed out: %i-%i\n", resend_start, resend_end);
                 NET_SV_SendResendRequest(client, 
                                          recvwindow_start + resend_start,
                                          recvwindow_start + resend_end);
@@ -1155,7 +1155,7 @@ static void NET_SV_ParseGameData(net_packet_t *packet, net_client_t *client)
     // all tics before the first tic in this packet?  If so, send a 
     // resend request.
 
-    //printf("SV: %p: %i\n", client, seq);
+    //DEH_printf("SV: %p: %i\n", client, seq);
 
     resend_end = seq - recvwindow_start;
 
@@ -1195,7 +1195,7 @@ static void NET_SV_ParseGameData(net_packet_t *packet, net_client_t *client)
     if (resend_start < resend_end)
     {
             /*
-        printf("missed %i-%i before %i, send resend\n",
+        DEH_printf("missed %i-%i before %i, send resend\n",
                         recvwindow_start + resend_start,
                         recvwindow_start + resend_end - 1,
                         seq);
@@ -1290,7 +1290,7 @@ static void NET_SV_ParseResendRequest(net_packet_t *packet, net_client_t *client
         return;
     }
 
-    //printf("SV: %p: resend %i-%i\n", client, start, start+num_tics-1);
+    //DEH_printf("SV: %p: resend %i-%i\n", client, start, start+num_tics-1);
 
     // Check we have all the requested tics
 
@@ -1417,7 +1417,7 @@ static void NET_SV_Packet(net_packet_t *packet, net_addr_t *addr)
     }
     else
     {
-        //printf("SV: %s: %i\n", NET_AddrToString(addr), packet_type);
+        //DEH_printf("SV: %s: %i\n", NET_AddrToString(addr), packet_type);
 
         switch (packet_type)
         {
@@ -1519,7 +1519,7 @@ static void NET_SV_PumpSendQueue(net_client_t *client)
         return;
     }
 
-    //printf("SV: have complete ticcmd for %i\n", client->sendseq);
+    //DEH_printf("SV: have complete ticcmd for %i\n", client->sendseq);
 
     // We have all data we need to generate a command for this tic.
     
@@ -1557,7 +1557,7 @@ static void NET_SV_PumpSendQueue(net_client_t *client)
             cmd.latency = recvobj->latency;
     }
 
-    //printf("SV: %i: latency %i\n", client->player_number, cmd.latency);
+    //DEH_printf("SV: %i: latency %i\n", client->player_number, cmd.latency);
 
     // Add into the queue
 
@@ -1608,7 +1608,7 @@ void NET_SV_CheckDeadlock(net_client_t *client)
         {
             if (!recvwindow[client->player_number][i].active)
             {
-                //printf("Possible deadlock: Sending resend request\n");
+                //DEH_printf("Possible deadlock: Sending resend request\n");
 
                 // Found a tic we haven't received.  Send a resend request.
 

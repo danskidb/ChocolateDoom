@@ -396,6 +396,11 @@ void DEH_printf(char *fmt, ...)
 
     vprintf(repl, args);
 
+    // Append everything that's printed with printf to a logfile.
+    FILE* logstream = fopen(LOGFILE, "a");
+    vfprintf(logstream, repl, args);
+    fclose(logstream);
+
     va_end(args);
 }
 
@@ -431,3 +436,7 @@ void DEH_snprintf(char *buffer, size_t len, char *fmt, ...)
     va_end(args);
 }
 
+void DEH_ClearLog()
+{
+    remove(LOGFILE);
+}

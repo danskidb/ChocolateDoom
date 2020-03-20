@@ -31,6 +31,8 @@
 #include "m_config.h"
 #include "m_misc.h"
 
+#include "deh_str.h"
+
 // When an axis is within the dead zone, it is set to zero.
 // This is 5% of the full range:
 
@@ -130,7 +132,7 @@ static int DeviceIndex(void)
         dev_guid = SDL_JoystickGetDeviceGUID(i);
         if (!memcmp(&guid, &dev_guid, sizeof(SDL_JoystickGUID)))
         {
-            printf("I_InitJoystick: Joystick moved to index %d.\n", i);
+            DEH_printf("I_InitJoystick: Joystick moved to index %d.\n", i);
             return i;
         }
     }
@@ -157,7 +159,7 @@ void I_InitJoystick(void)
 
     // if (index < 0)
     // {
-    //     printf("I_InitJoystick: Couldn't find joystick with GUID \"%s\": "
+    //     DEH_printf("I_InitJoystick: Couldn't find joystick with GUID \"%s\": "
     //            "device not found or not connected?\n",
     //            joystick_guid);
     //     SDL_QuitSubSystem(SDL_INIT_JOYSTICK);
@@ -171,7 +173,7 @@ void I_InitJoystick(void)
 
     if (joystick == NULL)
     {
-        printf("I_InitJoystick: Failed to open joystick #%i\n", index);
+        DEH_printf("I_InitJoystick: Failed to open joystick #%i\n", index);
         SDL_QuitSubSystem(SDL_INIT_JOYSTICK);
         return;
     }
@@ -180,7 +182,7 @@ void I_InitJoystick(void)
      || !IsValidAxis(joystick_y_axis)
      || !IsValidAxis(joystick_strafe_axis))
     {
-        printf("I_InitJoystick: Invalid joystick axis for configured joystick "
+        DEH_printf("I_InitJoystick: Invalid joystick axis for configured joystick "
                "(run joystick setup again)\n");
 
         SDL_JoystickClose(joystick);
@@ -192,7 +194,7 @@ void I_InitJoystick(void)
 
     // Initialized okay!
 
-    printf("I_InitJoystick: %s\n", SDL_JoystickName(joystick));
+    DEH_printf("I_InitJoystick: %s\n", SDL_JoystickName(joystick));
 
     I_AtExit(I_ShutdownJoystick, true);
 }

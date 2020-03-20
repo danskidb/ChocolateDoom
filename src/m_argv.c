@@ -26,6 +26,9 @@
 #include "m_misc.h"
 #include "m_argv.h"  // haleyjd 20110212: warning fix
 
+#include "deh_str.h"
+
+
 int		myargc;
 char**		myargv;
 
@@ -94,7 +97,7 @@ static void LoadResponseFile(int argv_index)
         exit(1);
     }
 
-    printf("Found response file %s!\n", response_filename);
+    DEH_printf("Found response file %s!\n", response_filename);
 
     size = M_FileLength(handle);
 
@@ -215,11 +218,11 @@ static void LoadResponseFile(int argv_index)
     // Disabled - Vanilla Doom does not do this.
     // Display arguments
 
-    printf("%d command-line args:\n", myargc);
+    DEH_printf("%d command-line args:\n", myargc);
 
     for (k=1; k<myargc; k++)
     {
-        printf("'%s'\n", myargv[k]);
+        DEH_printf("'%s'\n", myargv[k]);
     }
 #endif
 }

@@ -373,10 +373,10 @@ void GenerateOrbitTable(void)
 		orbitTableY[angle] = FixedMul(ORBIT_RADIUS, finesine[angle<<5]);
 	}
 
-	printf("int orbitTableX[256]=\n{\n");
+	DEH_printf("int orbitTableX[256]=\n{\n");
 	for (angle=0; angle<256; angle+=8)
 	{
-		printf("%d, %d, %d, %d, %d, %d, %d, %d,\n",
+		DEH_printf("%d, %d, %d, %d, %d, %d, %d, %d,\n",
 			orbitTableX[angle],
 			orbitTableX[angle+1],
 			orbitTableX[angle+2],
@@ -386,12 +386,12 @@ void GenerateOrbitTable(void)
 			orbitTableX[angle+6],
 			orbitTableX[angle+7]);
 	}
-	printf("};\n\n");
+	DEH_printf("};\n\n");
 
-	printf("int orbitTableY[256]=\n{\n");
+	DEH_printf("int orbitTableY[256]=\n{\n");
 	for (angle=0; angle<256; angle+=8)
 	{
-		printf("%d, %d, %d, %d, %d, %d, %d, %d,\n",
+		DEH_printf("%d, %d, %d, %d, %d, %d, %d, %d,\n",
 			orbitTableY[angle],
 			orbitTableY[angle+1],
 			orbitTableY[angle+2],
@@ -401,7 +401,7 @@ void GenerateOrbitTable(void)
 			orbitTableY[angle+6],
 			orbitTableY[angle+7]);
 	}
-	printf("};\n");
+	DEH_printf("};\n");
 }
 */
 

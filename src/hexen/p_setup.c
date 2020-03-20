@@ -1221,11 +1221,11 @@ void My_Debug(void)
 {
 	int i;
 
-	printf("My debug stuff ----------------------\n");
-	printf("gamemap=%d\n",gamemap);
+	DEH_printf("My debug stuff ----------------------\n");
+	DEH_printf("gamemap=%d\n",gamemap);
 	for (i=0; i<10; i++)
 	{
-		printf("i=%d  songlump=%s\n",i,MapInfo[i].songLump);
+		DEH_printf("i=%d  songlump=%s\n",i,MapInfo[i].songLump);
 	}
 }
 */

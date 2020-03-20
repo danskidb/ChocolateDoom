@@ -242,7 +242,7 @@ void R_GenerateLookup(int texnum)
     {
         if (!patchcount[x])
         {
-            printf("R_GenerateLookup: column without a patch (%s)\n",
+            DEH_printf("R_GenerateLookup: column without a patch (%s)\n",
                    texture->name);
             return;
         }
@@ -377,7 +377,7 @@ void R_InitTextures(void)
     {
 #ifdef __NEXT__
         if (!(i & 63))
-            printf(".");
+            DEH_printf(".");
 #else
         IncThermo();
 #endif
@@ -500,7 +500,7 @@ void R_InitSpriteLumps(void)
     {
 #ifdef __NEXT__
         if (!(i & 63))
-            printf(".");
+            DEH_printf(".");
 #else
         IncThermo();
 #endif

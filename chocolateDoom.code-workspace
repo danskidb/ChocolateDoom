@@ -2,6 +2,14 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "C:\\devkitPro\\libnx\\include",
+			"name": "LibNX headers"
+		},
+		{
+			"path": "C:\\devkitPro\\examples\\switch",
+			"name": "devKitPro Examples: Switch"
 		}
 	],
 	"settings": {

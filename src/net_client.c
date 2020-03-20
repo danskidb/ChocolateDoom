@@ -217,7 +217,7 @@ static void NET_CL_ExpandFullTiccmd(net_full_ticcmd_t *cmd, unsigned int seq,
         }
     }
 
-    //printf("latency: %i\tremote:%i\n", average_latency / FRACUNIT, 
+    //DEH_printf("latency: %i\tremote:%i\n", average_latency / FRACUNIT, 
     //                                   cmd->latency);
 
     // Possibly adjust offsetms in d_net.c, try to make players all have
@@ -285,7 +285,7 @@ static void NET_CL_AdvanceWindow(void)
 
         ++recvwindow_start;
 
-        //printf("CL: advanced to %i\n", recvwindow_start);
+        //DEH_printf("CL: advanced to %i\n", recvwindow_start);
     }
 }
 
@@ -529,7 +529,7 @@ static void NET_CL_SendResendRequest(int start, int end)
     unsigned int nowtime;
     int i;
 
-    //printf("CL: Send resend %i-%i\n", start, end);
+    //DEH_printf("CL: Send resend %i-%i\n", start, end);
     
     packet = NET_NewPacket(64);
     NET_WriteInt16(packet, NET_PACKET_TYPE_GAMEDATA_RESEND);
@@ -599,7 +599,7 @@ static void NET_CL_CheckResends(void)
             {
                 // End of a run of resend tics
 
-                //printf("CL: resend request timed out: %i-%i\n", resend_start, resend_end);
+                //DEH_printf("CL: resend request timed out: %i-%i\n", resend_start, resend_end);
                 NET_CL_SendResendRequest(recvwindow_start + resend_start,
                                          recvwindow_start + resend_end);
 
@@ -610,7 +610,7 @@ static void NET_CL_CheckResends(void)
 
     if (resend_start >= 0)
     {
-        //printf("CL: resend request timed out: %i-%i\n", resend_start, resend_end);
+        //DEH_printf("CL: resend request timed out: %i-%i\n", resend_start, resend_end);
         NET_CL_SendResendRequest(recvwindow_start + resend_start,
                                  recvwindow_start + resend_end);
     }
@@ -691,7 +691,7 @@ static void NET_CL_ParseGameData(net_packet_t *packet)
     // all tics before the first tic in this packet?  If so, send a 
     // resend request.
 
-    //printf("CL: %p: %i\n", client, seq);
+    //DEH_printf("CL: %p: %i\n", client, seq);
 
     resend_end = seq - recvwindow_start;
 
@@ -758,7 +758,7 @@ static void NET_CL_ParseResendRequest(net_packet_t *packet)
 
     end = start + num_tics - 1;
 
-    //printf("requested resend %i-%i .. ", start, end);
+    //DEH_printf("requested resend %i-%i .. ", start, end);
 
     // Check we have the tics being requested.  If not, reduce the 
     // window of tics to only what we have.
@@ -777,13 +777,13 @@ static void NET_CL_ParseResendRequest(net_packet_t *packet)
         --end;
     }
 
-    //printf("%i-%i\n", start, end);
+    //DEH_printf("%i-%i\n", start, end);
 
     // Resend those tics
 
     if (start <= end)
     {
-        //printf("CL: resend %i-%i\n", start, start+num_tics-1);
+        //DEH_printf("CL: resend %i-%i\n", start, start+num_tics-1);
 
         NET_CL_SendTics(start, end);
     }
@@ -802,7 +802,7 @@ static void NET_CL_ParseConsoleMessage(net_packet_t *packet)
         return;
     }
 
-    printf("Message from server: ");
+    DEH_printf("Message from server: ");
 
     NET_SafePuts(msg);
 }

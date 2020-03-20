@@ -28,6 +28,7 @@
 
 #include "deh_defs.h"
 #include "deh_io.h"
+#include "deh_str.h"
 
 extern deh_section_t *deh_section_types[];
 extern char *deh_signatures[];
@@ -332,7 +333,7 @@ static void DEH_ParseContext(deh_context_t *context)
                     current_section->end(context, tag);
                 }
 
-                //printf("end %s tag\n", current_section->name);
+                //DEH_printf("end %s tag\n", current_section->name);
                 current_section = NULL;
             }
         }
@@ -355,11 +356,11 @@ static void DEH_ParseContext(deh_context_t *context)
                 if (current_section != NULL)
                 {
                     tag = current_section->start(context, line);
-                    //printf("started %s tag\n", section_name);
+                    //DEH_printf("started %s tag\n", section_name);
                 }
                 else
                 {
-                    //printf("unknown section name %s\n", section_name);
+                    //DEH_printf("unknown section name %s\n", section_name);
                 }
             }
         }
@@ -384,7 +385,7 @@ int DEH_LoadFile(char *filename)
     deh_allow_long_cheats = false;
     deh_allow_extended_strings = false;
 
-    printf(" loading %s\n", filename);
+    DEH_printf(" loading %s\n", filename);
 
     context = DEH_OpenFile(filename);
 

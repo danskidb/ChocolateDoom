@@ -35,6 +35,8 @@
 #include "net_query.h"
 #include "net_server.h"
 
+#include "deh_str.h"
+
 #include "textscreen.h"
 
 static txt_window_t *window;
@@ -239,14 +241,14 @@ static void PrintSHA1Digest(char *s, byte *digest)
 {
     unsigned int i;
 
-    printf("%s: ", s);
+    DEH_printf("%s: ", s);
 
     for (i=0; i<sizeof(sha1_digest_t); ++i)
     {
-        printf("%02x", digest[i]);
+        DEH_printf("%02x", digest[i]);
     }
 
-    printf("\n");
+    DEH_printf("\n");
 }
 
 static void CloseWindow(TXT_UNCAST_ARG(widget), TXT_UNCAST_ARG(window))
@@ -283,22 +285,22 @@ static void CheckSHA1Sums(void)
 
     if (!correct_wad)
     {
-        printf("Warning: WAD SHA1 does not match server:\n");
+        DEH_printf("Warning: WAD SHA1 does not match server:\n");
         PrintSHA1Digest("Local", net_local_wad_sha1sum);
         PrintSHA1Digest("Server", net_client_wait_data.wad_sha1sum);
     }
 
     if (!same_freedoom)
     {
-        printf("Warning: Mixing Freedoom with non-Freedoom\n");
-        printf("Local: %i  Server: %i\n", 
+        DEH_printf("Warning: Mixing Freedoom with non-Freedoom\n");
+        DEH_printf("Local: %i  Server: %i\n", 
                net_local_is_freedoom, 
                net_client_wait_data.is_freedoom);
     }
 
     if (!correct_deh)
     {
-        printf("Warning: Dehacked SHA1 does not match server:\n");
+        DEH_printf("Warning: Dehacked SHA1 does not match server:\n");
         PrintSHA1Digest("Local", net_local_deh_sha1sum);
         PrintSHA1Digest("Server", net_client_wait_data.deh_sha1sum);
     }

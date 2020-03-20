@@ -24,6 +24,8 @@
 
 // Used to do dehacked text substitutions throughout the program
 
+#define LOGFILE "doomlog.txt"
+
 #ifdef FEATURE_DEHACKED
 
 char *DEH_String(char *s);
@@ -32,6 +34,7 @@ void DEH_fprintf(FILE *fstream, char *fmt, ...);
 void DEH_snprintf(char *buffer, size_t len, char *fmt, ...);
 void DEH_AddStringReplacement(char *from_text, char *to_text);
 
+void DEH_ClearLog();
 
 #else
 
@@ -39,6 +42,7 @@ void DEH_AddStringReplacement(char *from_text, char *to_text);
 #define DEH_printf printf
 #define DEH_fprintf fprintf
 #define DEH_snprintf snprintf
+#define DEH_ClearLog() ()
 
 #endif
 

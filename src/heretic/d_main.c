@@ -473,7 +473,7 @@ boolean D_AddFile(char *file)
 {
     wad_file_t *handle;
 
-    printf("  adding %s\n", file);
+    DEH_printf("  adding %s\n", file);
 
     handle = W_AddFile(file);
 
@@ -691,7 +691,7 @@ void tprintf(char *msg, int initflag)
     _settextposition(25, 1);
     drawstatus();
 #else
-    printf("%s", msg);
+    DEH_printf("%s", msg);
 #endif
 }
 
@@ -1034,7 +1034,7 @@ void D_DoomMain(void)
             M_StringCopy(demolumpname, myargv[p + 1], sizeof(demolumpname));
         }
 
-        printf("Playing demo %s.\n", file);
+        DEH_printf("Playing demo %s.\n", file);
     }
 
     //!

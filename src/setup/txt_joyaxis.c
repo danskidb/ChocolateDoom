@@ -239,7 +239,7 @@ static void IdentifyBadAxes(txt_joystick_axis_t *joystick_axis)
 
         if (joystick_axis->bad_axis[i])
         {
-            printf("Ignoring uncentered joystick axis #%i: %i\n", i, val);
+            DEH_printf("Ignoring uncentered joystick axis #%i: %i\n", i, val);
         }
     }
 }
