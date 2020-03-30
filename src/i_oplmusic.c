@@ -1757,6 +1757,8 @@ static void I_OPL_ShutdownMusic(void)
 
 static boolean I_OPL_InitMusic(void)
 {
+    DEH_printf("I_OPL_InitMusic\n");
+
     char *dmxoption;
     opl_init_result_t chip_type;
 

@@ -248,7 +248,7 @@ static void LockAllocatedSound(allocated_sound_t *snd)
 
     ++snd->use_count;
 
-    //DEH_printf("++ %s: Use count=%i\n", snd->sfxinfo->name, snd->use_count);
+    //printf("++ %s: Use count=%i\n", snd->sfxinfo->name, snd->use_count);
 
     // When we use a sound, re-link it into the list at the head, so
     // that the oldest sounds fall to the end of the list for freeing.
@@ -268,7 +268,7 @@ static void UnlockAllocatedSound(allocated_sound_t *snd)
 
     --snd->use_count;
 
-    //DEH_printf("-- %s: Use count=%i\n", snd->sfxinfo->name, snd->use_count);
+    //printf("-- %s: Use count=%i\n", snd->sfxinfo->name, snd->use_count);
 }
 
 // Search through the list of allocated sounds and return the one that matches
@@ -631,11 +631,15 @@ static boolean ExpandSoundData_SDL(sfxinfo_t *sfxinfo,
                           AUDIO_U8, 1, samplerate,
                           mixer_format, mixer_channels, mixer_freq))
     {
-        convertor.buf = chunk->abuf;
         convertor.len = length;
+        convertor.buf = malloc(convertor.len * convertor.len_mult);
+        assert(convertor.buf != NULL);
         memcpy(convertor.buf, data, length);
 
         SDL_ConvertAudio(&convertor);
+
+        memcpy(chunk->abuf, convertor.buf, chunk->alen);
+        free(convertor.buf);
     }
     else
     {
@@ -820,13 +824,13 @@ static void I_SDL_PrecacheSounds(sfxinfo_t *sounds, int num_sounds)
 	return;
     }
 
-    DEH_printf("I_SDL_PrecacheSounds: Precaching all sound effects..");
+    printf("I_SDL_PrecacheSounds: Precaching all sound effects..");
 
     for (i=0; i<num_sounds; ++i)
     {
         if ((i % 6) == 0)
         {
-            DEH_printf(".");
+            printf(".");
             fflush(stdout);
         }
 
@@ -840,7 +844,7 @@ static void I_SDL_PrecacheSounds(sfxinfo_t *sounds, int num_sounds)
         }
     }
 
-    DEH_printf("\n");
+    printf("\n");
 }
 
 #else
@@ -1071,10 +1075,21 @@ static boolean I_SDL_InitSound(boolean _use_sfx_prefix)
 {
     int i;
 
+    // SDL 2.0.6 has a bug that makes it unusable.
+    if (SDL_COMPILEDVERSION == SDL_VERSIONNUM(2, 0, 6))
+    {
+        I_Error(
+            "I_SDL_InitSound: "
+            "You are trying to launch with SDL 2.0.6 which has a known bug "
+            "that makes the game crash. Please either downgrade to "
+            "SDL 2.0.5 or upgrade to 2.0.7. See the following bug for some "
+            "additional context:\n"
+            "<https://github.com/chocolate-doom/chocolate-doom/issues/945>");
+    }
+
     use_sfx_prefix = _use_sfx_prefix;
 
     // No sounds yet
-
     for (i=0; i<NUM_CHANNELS; ++i)
     {
         channels_playing[i] = NULL;

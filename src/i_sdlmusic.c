@@ -111,6 +111,7 @@ static boolean sdl_was_initialized = false;
 static boolean musicpaused = false;
 static int current_music_volume;
 
+char *music_pack_path = "";
 char *timidity_cfg_path = "";
 
 static char *temp_timidity_cfg = NULL;
@@ -378,7 +379,7 @@ static void ReadLoopPoints(char *filename, file_metadata_t *metadata)
     metadata->start_time = 0;
     metadata->end_time = -1;
 
-    fs = fopen(filename, "r");
+    fs = fopen(filename, "rb");
 
     if (fs == NULL)
     {
@@ -469,7 +470,7 @@ static void AddSubstituteMusic(subst_music_t *subst)
 {
     ++subst_music_len;
     subst_music =
-        realloc(subst_music, sizeof(subst_music_t) * subst_music_len);
+        I_Realloc(subst_music, sizeof(subst_music_t) * subst_music_len);
     memcpy(&subst_music[subst_music_len - 1], subst, sizeof(subst_music_t));
 }
 
@@ -629,25 +630,38 @@ static char *ParseSubstituteLine(char *filename, char *line)
 
 static boolean ReadSubstituteConfig(char *filename)
 {
-    char line[128];
-    FILE *fs;
-    char *error;
+    char *buffer;
+    char *line;
     int linenum = 1;
-//    int old_subst_music_len;
 
-    fs = fopen(filename, "r");
-
-    if (fs == NULL)
+    // This unnecessarily opens the file twice...
+    if (!M_FileExists(filename))
     {
         return false;
     }
 
-//    old_subst_music_len = subst_music_len;
+    M_ReadFile(filename, (byte **) &buffer);
 
-    while (!feof(fs))
+    line = buffer;
+
+    while (line != NULL)
     {
-        M_StringCopy(line, "", sizeof(line));
-        fgets(line, sizeof(line), fs);
+        char *error;
+        char *next;
+
+        // find end of line
+        char *eol = strchr(line, '\n');
+        if (eol != NULL)
+        {
+            // change the newline into NUL
+            *eol = '\0';
+            next = eol + 1;
+        }
+        else
+        {
+            // end of buffer
+            next = NULL;
+        }
 
         error = ParseSubstituteLine(filename, line);
 
@@ -657,9 +671,10 @@ static boolean ReadSubstituteConfig(char *filename)
         }
 
         ++linenum;
+        line = next;
     }
 
-    fclose(fs);
+    Z_Free(buffer);
 
     return true;
 }
@@ -672,7 +687,14 @@ static void LoadSubstituteConfigs(void)
     char *path;
     unsigned int i;
 
-    if (!strcmp(configdir, ""))
+    // We can configure the path to music packs using the music_pack_path
+    // configuration variable. Otherwise we use the current directory, or
+    // $configdir/music to look for .cfg files.
+    if (strcmp(music_pack_path, "") != 0)
+    {
+        musicdir = M_StringJoin(music_pack_path, DIR_SEPARATOR_S, NULL);
+    }
+    else if (!strcmp(configdir, ""))
     {
         musicdir = M_StringDuplicate("");
     }
@@ -696,7 +718,7 @@ static void LoadSubstituteConfigs(void)
 
     if (subst_music_len > 0)
     {
-        DEH_printf("Loaded %i music substitutions from config files.\n",
+        printf("Loaded %i music substitutions from config files.\n",
                subst_music_len);
     }
 }
@@ -779,7 +801,7 @@ static void DumpSubstituteConfig(char *filename)
     fprintf(fs, "\n");
     fclose(fs);
 
-    DEH_printf("Substitute MIDI config file written to %s.\n", filename);
+    printf("Substitute MIDI config file written to %s.\n", filename);
     I_Quit();
 }
 
@@ -827,14 +849,7 @@ void I_InitTimidityConfig(void)
 
     temp_timidity_cfg = M_TempFile("timidity.cfg");
 
-    if (snd_musicdevice == SNDDEVICE_GUS)
-    {
-        success = GUS_WriteConfig(temp_timidity_cfg);
-    }
-    else
-    {
-        success = WriteWrapperTimidityConfig(temp_timidity_cfg);
-    }
+	success = WriteWrapperTimidityConfig(temp_timidity_cfg);
 
     // Set the TIMIDITY_CFG environment variable to point to the temporary
     // config file.
@@ -901,6 +916,7 @@ static boolean I_SDL_InitMusic(void)
     int i;
 
     //!
+    // @category obscure
     // @arg <filename>
     //
     // Read all MIDI files from loaded WAD files, dump an example substitution
@@ -1071,6 +1087,7 @@ static void I_SDL_StopSong(void)
     }
 
     Mix_HaltMusic();
+
     playing_substitute = false;
     current_track_music = NULL;
 }
@@ -1182,12 +1199,10 @@ static void *I_SDL_RegisterSong(void *data, int len)
     // we have to generate a temporary file.
 
     music = Mix_LoadMUS(filename);
-
     if (music == NULL)
     {
         // Failed to load
-
-        fprintf(stderr, "Error loading midi: %s\n", Mix_GetError());
+        DEH_fprintf(stderr, "Error loading midi: %s\n", Mix_GetError());
     }
 
     // Remove the temporary MIDI file; however, when using an external

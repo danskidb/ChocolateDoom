@@ -19,6 +19,7 @@
 //	and call the startup functions.
 //
 
+#include <switch.h>
 
 #include <ctype.h>
 #include <stdio.h>
@@ -1230,6 +1231,15 @@ void D_DoomMain (void)
 
     I_PrintBanner(PACKAGE_STRING);
 
+    // Initialize RomFs
+
+    Result rc = romfsInit();
+    if(R_FAILED(rc)) 
+    {
+        DEH_printf("Z_Init: %08X\n", rc);
+        exit(0);
+    }
+
     DEH_printf("Z_Init: Init zone memory allocation daemon. \n");
     Z_Init ();
 
@@ -1682,15 +1692,16 @@ void D_DoomMain (void)
     I_CheckIsScreensaver();
     I_InitTimer();
     I_InitJoystick();
-    //I_InitSound(true);
-    //I_InitMusic();
+    I_InitSound(true);
+    I_InitMusic();
 
 #ifdef FEATURE_MULTIPLAYER
     DEH_printf("NET_Init: Init network subsystem.\n");
     NET_Init ();
 #endif
-
+    
     // Initial netgame startup. Connect to server etc.
+    DEH_printf("D_ConnectNetGame: Init network subsystem.\n");
     D_ConnectNetGame();
 
     // get skill / episode / map from parms

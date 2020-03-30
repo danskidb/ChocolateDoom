@@ -21,7 +21,6 @@
 #include "SDL_mixer.h"
 
 #include "config.h"
-#include "doomfeatures.h"
 #include "doomtype.h"
 
 #include "gusconf.h"
@@ -29,6 +28,7 @@
 #include "i_video.h"
 #include "m_argv.h"
 #include "m_config.h"
+#include "deh_str.h"
 
 // Sound sample rate to use for digital output (Hz)
 
@@ -76,6 +76,7 @@ extern int opl_io_port;
 
 // For native music module:
 
+extern char *music_pack_path;
 extern char *timidity_cfg_path;
 
 // DOS-specific options: These are unused but should be maintained
@@ -148,7 +149,7 @@ static void InitSfxModule(boolean use_sfx_prefix)
             // Initialize the module
 
             if (sound_modules[i]->Init(use_sfx_prefix))
-            {
+            {				 
                 sound_module = sound_modules[i];
                 return;
             }
@@ -224,12 +225,11 @@ void I_InitSound(boolean use_sfx_prefix)
     {
         // This is kind of a hack. If native MIDI is enabled, set up
         // the TIMIDITY_CFG environment variable here before SDL_mixer
-        // is opened.
-
+        // is opened.		
         if (!nomusic
          && (snd_musicdevice == SNDDEVICE_GENMIDI
           || snd_musicdevice == SNDDEVICE_GUS))
-        {
+        {		 
             I_InitTimidityConfig();
         }
 
@@ -437,6 +437,7 @@ boolean I_MusicIsPlaying(void)
 
 void I_BindSoundVariables(void)
 {
+    DEH_printf("I_BindSoundVariables\n");
     extern char *snd_dmxoption;
     extern int use_libsamplerate;
     extern float libsamplerate_scale;
@@ -456,12 +457,10 @@ void I_BindSoundVariables(void)
     M_BindIntVariable("snd_pitchshift",          &snd_pitchshift);
 
     M_BindStringVariable("timidity_cfg_path",    &timidity_cfg_path);
-    M_BindStringVariable("gus_patch_path",       &gus_patch_path);
-    M_BindIntVariable("gus_ram_kb",              &gus_ram_kb);
+    //M_BindStringVariable("gus_patch_path",       &gus_patch_path);
+    //M_BindIntVariable("gus_ram_kb",              &gus_ram_kb);
 
-#ifdef FEATURE_SOUND
-    M_BindIntVariable("use_libsamplerate",       &use_libsamplerate);
-    M_BindFloatVariable("libsamplerate_scale",   &libsamplerate_scale);
-#endif
+    //M_BindIntVariable("use_libsamplerate",       &use_libsamplerate);
+    //M_BindFloatVariable("libsamplerate_scale",   &libsamplerate_scale);
 }
 

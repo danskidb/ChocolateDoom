@@ -16,6 +16,7 @@
 //
 
 
+#include <switch.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -248,7 +249,7 @@ void I_Quit (void)
     }
 
     SDL_Quit();
-
+    romfsExit();
     exit(0);
 }
 
@@ -269,7 +270,7 @@ void I_Error (char *error, ...)
 
     if (already_quitting)
     {
-        fprintf(stderr, "Warning: recursive call to I_Error detected.\n");
+        DEH_fprintf(stderr, "Warning: recursive call to I_Error detected.\n");
         exit(-1);
     }
     else
@@ -279,9 +280,9 @@ void I_Error (char *error, ...)
 
     // Message first.
     va_start(argptr, error);
-    //fprintf(stderr, "\nError: ");
+    DEH_fprintf(stderr, "\nError: ");
     vfprintf(stderr, error, argptr);
-    fprintf(stderr, "\n\n");
+    DEH_fprintf(stderr, "\n\n");
     va_end(argptr);
     fflush(stderr);
 
@@ -319,8 +320,22 @@ void I_Error (char *error, ...)
     // abort();
 
     SDL_Quit();
-
+    romfsExit();
     exit(-1);
+}
+
+void *I_Realloc(void *ptr, size_t size)
+{
+    void *new_ptr;
+
+    new_ptr = realloc(ptr, size);
+
+    if (size != 0 && new_ptr == NULL)
+    {
+        I_Error ("I_Realloc: failed on reallocation of %" PRIuPTR " bytes", size);
+    }
+
+    return new_ptr;
 }
 
 //

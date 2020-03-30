@@ -47,7 +47,7 @@ BUILD		:=	build
 SOURCES		:=	src/ src/doom/ opl/ textscreen/ pcsound/
 #DATA		:=	data
 INCLUDES    :=  src/ src/doom/ opl/ textscreen/ pcsound/ codeblocks/ 
-#ROMFS	:=	romfs
+ROMFS		:=	romfs
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -62,16 +62,15 @@ CFLAGS	+=	-D__SWITCH__ $(INCLUDE) `sdl2-config --cflags`
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions
 
 ASFLAGS	:=	-g $(ARCH)
-#LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
+LDFLAGS	=	-specs=$(DEVKITPRO)/libnx/switch.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-#LIBS	:= `sdl2-config --libs`
-LIBS      = -specs=$(DEVKITPRO)/libnx/switch.specs -g -march=armv8-a -mtune=cortex-a57 -mtp=soft -fPIE -L$(DEVKITPRO)/libnx/lib -L$(DEVKITPRO)/portlibs/switch/lib  -lSDL2_mixer -lmpg123 -lmodplug -lvorbisidec -logg -lopusfile -lopus `sdl2-config --libs` -lm  -lstdc++ -lnx
+LIBS	:= `sdl2-config --libs` -lSDL2_mixer -lSDL2_ttf -lmpg123 -lmodplug -lvorbisidec -logg -lopusfile -lopus -lm  -lstdc++
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-#LIBDIRS	:= $(PORTLIBS) $(LIBNX)
+LIBDIRS	:= $(PORTLIBS) $(LIBNX)
 
 
 #---------------------------------------------------------------------------------
